@@ -1,4 +1,4 @@
-# ake the user to enter a temperature in fahrenheit.
+# ask the user to enter a temperature in fahrenheit.
 # convert the temperature to celsius using the formula: C = (F - 32) * 5/9
 # Name: Jordyn Pendergrass
 # Date: Jan 22, 2026
@@ -10,3 +10,4 @@ celsius_value_rounded = round(celsius_value, 1)
 
 print("You entered:", fahrenheit_value)
 print(f"The temperature in Celsius is: {celsius_value_rounded}")
+
