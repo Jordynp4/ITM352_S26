@@ -1,4 +1,5 @@
 import HandyMath
+from HandyMath import max, min
 
 number1 = float(input("Enter the first number: "))
 number2 = float(input("Enter the second number: "))
@@ -9,10 +10,10 @@ print(f"The midpoint between {number1} and {number2} is {mid}")
 exp = HandyMath.exponent(number1, number2, 3)
 print(f"{number1} raised to the power of {number2} is approximately {exp}")
 
-max_value = HandyMath.max(number1, number2)
+max_value = max(number1, number2)
 print(f"The maximum of {number1} and {number2} is {max_value}")
 
-min_value = HandyMath.min(number1, number2)
+min_value = min(number1, number2)
 print(f"The minimum of {number1} and {number2} is {min_value}")
 
 sqrt1 = HandyMath.sqrt(number1)
