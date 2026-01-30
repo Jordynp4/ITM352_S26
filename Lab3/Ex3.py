@@ -3,3 +3,10 @@ def sqrt(number):
     if number < 0:
         return None
     return number ** 0.5
+
+number_in = float(input("Enter a positive number to find its square root: "))
+result = sqrt(number_in)
+if result is not None:
+    print(f"The square root of {number_in} is {result}")
+else:
+    print("Error: Cannot compute square root of a negative number.")
