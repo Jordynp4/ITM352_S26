@@ -13,7 +13,7 @@ def sqrt(number):
         return None
     return number ** 0.5
 
-def exponent(base, exp, precision):
+def exponent(base, exp, precision=2):
     """Calculate the exponentiation of a base raised to exp."""
     result = base ** exp
     rounded_result = round(result, precision)
