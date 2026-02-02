@@ -4,5 +4,8 @@ first = input("Enter your first name:  ")
 MiddleIn = input("Enter your middle initial:  ")
 last = input("Enter your last name:  ")
 
-full_name = (f'{first} {MiddleIn}. {last}')
-print("Your full name is:  ", full_name)
+#full_name = (f'{first} {MiddleIn}. {last}')
+#print("Your full name is:  ", full_name)
+
+full_name_2 = "first: %s, middle initial: %s, last: %s" % (first, MiddleIn, last)
+print("Your full name is:  ", full_name_2)
