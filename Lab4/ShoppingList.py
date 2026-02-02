@@ -5,5 +5,6 @@ shopping_list.append("Bananas")
 shopping_list.append("Carrots")
 shopping_list.insert(0, "eggs")
 shopping_list.sort()
+shopping_list.remove("Apples")
 
 print("Current shopping list:", shopping_list)
