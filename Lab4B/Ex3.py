@@ -11,6 +11,7 @@ parts = cleaned_url.split(".")
 domain = parts[1]
 print("Domain:", domain)
 
+# We might get a trailing / character, so we need to remove it.
 TLD = parts[2]
 TLD_cleaned = TLD.strip("/")
 print("Top Level Domain:", TLD_cleaned)
