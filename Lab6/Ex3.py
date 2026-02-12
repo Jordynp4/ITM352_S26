@@ -16,6 +16,25 @@ def determine_progress1(hits, spins):
 
     return progress
 
+def determine_progress2(hits, spins):
+    if spins == 0 or hits == 0:
+        return "Get going!"
+    
+    hits_spins_ratio = hits / spins
+
+    if hits_spins_ratio <= 0:
+        return "Get going!"
+    
+    if hits_spins_ratio < 0.25:
+        return "On your way!"
+    
+    if hits_spins_ratio < 0.5:
+        return "Almost there!"
+    
+    if hits >= spins:
+        return "Almost there!"
+    
+    return "You win!"  # Default case, should not be reached with valid inputs
 
 def test_determine_progress(determine_progress):
     """Test function that checks all possible return values of determine_progress1"""
