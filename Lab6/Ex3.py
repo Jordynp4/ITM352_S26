@@ -34,7 +34,26 @@ def determine_progress2(hits, spins):
     if hits >= spins:
         return "Almost there!"
     
-    return "You win!"  # Default case, should not be reached with valid inputs
+    return "You win!"
+
+
+def determine_progress3(hits, spins):
+    """Rewritten using if-elif conditions to match determine_progress2 behavior."""
+    if spins == 0 or hits == 0:
+        return "Get going!"
+
+    hits_spins_ratio = hits / spins
+
+    if hits_spins_ratio <= 0:
+        return "Get going!"
+    elif hits_spins_ratio < 0.25:
+        return "On your way!"
+    elif hits_spins_ratio < 0.5:
+        return "Almost there!"
+    elif hits >= spins:
+        return "Almost there!"
+    else:
+        return "You win!"
 
 def test_determine_progress(determine_progress):
     """Test function that checks all possible return values of determine_progress1"""
@@ -59,5 +78,5 @@ def test_determine_progress(determine_progress):
     
     print("All tests passed!")
 
-# Run the test
-test_determine_progress(determine_progress1)
+# Run the test for the rewritten function
+test_determine_progress(determine_progress3)
