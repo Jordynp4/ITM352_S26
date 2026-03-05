@@ -39,3 +39,6 @@ for num, (question, options) in enumerate(QUESTIONS.items(), start=1):
         print(f"Incorrect!")
 
 print(f"\nYour final score is {score}/{len(QUESTIONS)} ({score/len(QUESTIONS)*100:.1f}%)")
+
+# Write the history of scores out to a file
+score_history = open("score_history.txt", "a")
