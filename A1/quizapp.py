@@ -40,8 +40,25 @@ for num, (question, options) in enumerate(QUESTIONS.items(), start=1):
 
 print(f"\nYour final score is {score}/{len(QUESTIONS)} ({score/len(QUESTIONS)*100:.1f}%)")
 
+
+# Notify the user when they get a new high score.
+high_score = 0
+try:
+    with open("quiz_scores.txt", "r") as file:
+        for line in file:
+            score_part = line.split("/")[0].replace("Score:", "").strip()
+            previous_score = int(score_part)
+
+            if previous_score > high_score:
+                high_score = previous_score
+except FileNotFoundError:
+    high_score = 0
+
+if score > high_score:
+    print("New high score!")
+
 # Write the history of scores out to a file
 with open("quiz_scores.txt", "a") as score_file:
     score_file.write(f"Score: {score}/{len(QUESTIONS)} ({score/len(QUESTIONS)*100:.1f}%)\n")
-    
+
 
