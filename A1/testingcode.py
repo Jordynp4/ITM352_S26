@@ -15,6 +15,7 @@ QUESTIONS = {
     "What is the name of the giant ginerbread man in Shrek 2?": ["Mongo", "Gingy", "gum drop", "cookie"]
 }
 
+
 score = 0
 for num, (question, options) in enumerate(QUESTIONS.items(), start=1):
     print(f"Question {num}:")
@@ -39,9 +40,3 @@ for num, (question, options) in enumerate(QUESTIONS.items(), start=1):
         print(f"Incorrect!")
 
 print(f"\nYour final score is {score}/{len(QUESTIONS)} ({score/len(QUESTIONS)*100:.1f}%)")
-
-# Write the history of scores out to a file
-with open("quiz_scores.txt", "a") as score_file:
-    score_file.write(f"Score: {score}/{len(QUESTIONS)} ({score/len(QUESTIONS)*100:.1f}%)\n")
-    
-
