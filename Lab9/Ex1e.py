@@ -1,0 +1,5 @@
+file_object = open("names.txt")
+contents_list = file_object.readlines()
+print(contents_list)
+print(f"Number of names: {len(contents_list)}")
+file_object.close()
