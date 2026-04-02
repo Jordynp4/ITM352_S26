@@ -33,7 +33,6 @@ def load_csv(filepath):
         else:
             print("All required columns are present.")
 
-        
         return df
     
     except Exception as e:
@@ -46,4 +45,10 @@ filename = 'Sales_data.csv'
 #filename = 'Sales_data_test.csv'
 sales_data = load_csv(filename)
 
-print(sales_data.head(10))
+def main():
+    while True:
+        print("Sales Data Dashboard")
+        display_initial_rows()
+
+if __name__ == "__main__":
+    main()
