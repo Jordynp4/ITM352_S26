@@ -40,15 +40,38 @@ def load_csv(filepath):
         return None
 
 
+def display_initial_rows(dataframe):
+    print("Enter rows to display")
+    print(f"- Enter a number 1 to {len(dataframe)}")
+    print("- Enter 'all' to display all rows")
+    print("- to skip preview, press Enter")
+    user_input = input("Your choice: ").strip().lower()
+
+    if user_input == '':
+        print("Skipping preview.")
+        return
+    elif user_input == 'all':
+        print("Displaying all rows:")
+        print(dataframe)
+    elif user_input.isdigit and 1 <= int(user_input) <= len(dataframe):
+        print(f"Displaying first {user_input} rows:")
+        print(dataframe.head(int(user_input)))
+    else:
+        print("Invalid input. Please try again.")
+        
+
 # Call load_csv to load the data amd print the first 10 rows
-filename = 'Sales_data.csv'
-#filename = 'Sales_data_test.csv'
+#filename = 'Sales_data.csv'
+filename = 'Sales_data_test.csv'
 sales_data = load_csv(filename)
 
+
+# Run the main processing loop
 def main():
     while True:
         print("Sales Data Dashboard")
-        display_initial_rows()
+        display_initial_rows(sales_data)
 
+# Check if this is the main moduel being run
 if __name__ == "__main__":
     main()
