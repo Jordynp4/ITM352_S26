@@ -68,6 +68,56 @@ def export_to_excel(result_df):
     except Exception as e:
         print(f"Error exporting to Excel: {e}")
 
+# Data Summary
+def display_data_summary(df):
+    print("\n--- Sales Data Summary ---")
+
+    print(f"Total orders: {len(df)}")
+
+    if 'employee_id' in df.columns:
+        print(f"Number of employees: {df['employee_id'].nunique()}")
+    else:
+        print("Number of employees: Not available")
+
+    if 'sales_region' in df.columns:
+        print(f"Sales regions: {df['sales_region'].nunique()}")
+    else:
+        print("Sales regions: Not available")
+
+    if 'order_date' in df.columns:
+        valid_dates = pd.to_datetime(df['order_date'], errors='coerce').dropna()
+        if len(valid_dates) > 0:
+            print(f"Dates range of orders: {valid_dates.min().date()} to {valid_dates.max().date()}")
+        else:
+            print("Dates range of orders: Not available")
+    else:
+        print("Dates range of orders: Not available")
+
+    if 'customer_name' in df.columns:
+        print(f"Number of unique customers: {df['customer_name'].nunique()}")
+    else:
+        print("Number of unique customers: Not available")
+
+    if 'product_category' in df.columns:
+        print(f"Product categories: {df['product_category'].nunique()}")
+    else:
+        print("Product categories: Not available")
+
+    if 'customer_state' in df.columns:
+        print(f"Unique states: {df['customer_state'].nunique()}")
+    else:
+        print("Unique states: Not available")
+
+    if 'sales' in df.columns:
+        print(f"Total sales amount: {df['sales'].sum():.2f}")
+    else:
+        print("Total sales amount: Not available")
+
+    if 'quantity' in df.columns:
+        print(f"Total quantities of products sold: {df['quantity'].sum()}")
+    else:
+        print("Total quantities of products sold: Not available")
+
 # Menu Options
 def show_first_n_rows(df):
     total_rows = len(df)
@@ -83,24 +133,22 @@ def show_first_n_rows(df):
         return
     if choice == "all":
         print(df)
+        export_to_excel
         return
     if choice.isdigit():
         n = int(choice)
         if 1 <= n <= total_rows:
             print(df.head(n))
+            export_to_excel
         else:
             print(f"Invalid input. Please enter a number from 1 to {total_rows}.")
     else:
         print("Invalid input. Please enter a number, 'all', or press Enter.")
 
 def total_sales_by_region_and_order_type(df):
-    needed = ['region', 'order_type', 'sales']
-    if not check_columns(df, needed):
-        return
-
     pivot = pd.pivot_table(
         df,
-         index='region',
+        index='sales_region',
         columns='order_type',
         values='sales',
         aggfunc='sum',
@@ -108,58 +156,50 @@ def total_sales_by_region_and_order_type(df):
     )
     print("\nTotal sales by region and order_type:")
     print(pivot)
+    export_to_excel(pivot)
+
 
 def average_sales_by_region_state_sale_type(df):
-    needed = ['region', 'state', 'sale_type', 'sales']
-    if not check_columns(df, needed):
-        return
-
     pivot = pd.pivot_table(
         df,
-        index='region',
-        columns=['state', 'sale_type'],
+        index='sales_region',
+        columns='customer_state',
         values='sales',
         aggfunc='mean',
         fill_value=0
     )
-    print("\nAverage sales by region with average sales by state and sale type:")
+    print("\nAverage sales by region with average sales by state:")
     print(pivot)
+    export_to_excel(pivot)
+
 
 def sales_by_customer_type_order_type_state(df):
-    needed = ['customer_type', 'order_type', 'state', 'sales']
-    if not check_columns(df, needed):
-        return
-
     pivot = pd.pivot_table(
         df,
-        index=['state', 'customer_type', 'order_type'],
+        index=['customer_state', 'customer_type', 'order_type'],
         values='sales',
         aggfunc='sum',
         fill_value=0
     )
     print("\nSales by customer type and order type by state:")
     print(pivot)
+    export_to_excel(pivot)
+
 
 def total_sales_quantity_price_by_region_product(df):
-    needed = ['region', 'product', 'quantity', 'unit_price', 'sales']
-    if not check_columns(df, needed):
-        return
-    
     pivot = pd.pivot_table(
         df,
-        index=['region', 'product'],
+        index=['sales_region', 'produce_name'],
         values=['quantity', 'sales'],
         aggfunc='sum',
         fill_value=0
     )
     print("\nTotal sales quantity and price by region and product:")
     print(pivot)
+    export_to_excel(pivot)
+
 
 def total_sales_quantity_price_by_customer_type(df):
-    needed = ['customer_type', 'quantity', 'unit_price', 'sales']
-    if not check_columns(df, needed):
-        return
-
     pivot = pd.pivot_table(
         df,
         index=['order_type', 'customer_type'],
@@ -169,30 +209,26 @@ def total_sales_quantity_price_by_customer_type(df):
     )
     print("\nTotal sales quantity and price by order type and customer type:")
     print(pivot)
+    export_to_excel(pivot)
+
 
 def max_min_sales_price_by_category(df):
-    needed = ['category', 'sales']
-    if not check_columns(df, needed):
-        return
-
     pivot = pd.pivot_table(
         df,
-        index='category',
+        index='product_category',
         values='sales',
         aggfunc=['max', 'min'],
         fill_value=0
     )
     print("\nMax and min sales price of sales by category:")
     print(pivot)
+    export_to_excel(pivot)
+
 
 def unique_employees_by_region(df):
-    needed = ['region', 'employee_id']
-    if not check_columns(df, needed):
-        return
-
     pivot = pd.pivot_table(
         df,
-        index='region',
+        index='sales_region',
         values='employee_id',
         aggfunc=pd.Series.nunique,
         fill_value=0
@@ -201,6 +237,7 @@ def unique_employees_by_region(df):
 
     print("\nNumber of unique employees by region:")
     print(pivot)
+    export_to_excel(pivot)
 
 def create_custom_pivot_table(df):
     print("\n--- Pivot Table Generator ---")
@@ -218,7 +255,7 @@ def create_custom_pivot_table(df):
 
     value_options = {
         "1": "quantity",
-        "2": "sale_price"
+        "2": "unit_price"
     }
 
     agg_options = {
@@ -234,8 +271,8 @@ def create_custom_pivot_table(df):
             return []
 
         choices = [choice.strip() for choice in user_input.split(",")]
-
         selected = []
+
         for choice in choices:
             if choice not in options_dict:
                 return None
@@ -266,7 +303,7 @@ def create_custom_pivot_table(df):
 
     print("\nSelect values:")
     print("1. quantity")
-    print("2. sale_price")
+    print("2. unit_price")
     value_input = input("Enter the number(s) of your choice(s), separated by commas: ")
     values = parse_choices(value_input, value_options)
 
@@ -293,22 +330,18 @@ def create_custom_pivot_table(df):
         print(f"Cannot create pivot table. Missing columns: {missing}")
         return
 
-    try:
-        pivot = pd.pivot_table(
-            df,
-            index=rows,
-            columns=columns if len(columns) > 0 else None,
-            values=values,
-            aggfunc=aggfunc,
-            fill_value=0
-        )
-
-        print("\nGenerated Pivot Table:")
-        print(pivot)
-
-    except Exception as e:
-        print(f"Error creating pivot table: {e}")
-
+    pivot = pd.pivot_table(
+        df,
+        index=rows,
+        columns=columns if len(columns) > 0 else None,
+        values=values,
+        aggfunc=aggfunc,
+        fill_value=0
+    )
+    print("\nGenerated Pivot Table:")
+    print(pivot)
+    export_to_excel(pivot)
+    
 # Menu Display
 def display_menu(dataframe):
     menu_options = (
@@ -324,26 +357,30 @@ def display_menu(dataframe):
         ("Exit", None)
     )
 
-    print("Available options:")
-    for i, (description, _) in enumerate(menu_options, start=1):
-        print(f"{i}. {description}")
+    while True:
+        print("\n--- Sales Data Dashboard ---")
+        for i, (description, _) in enumerate(menu_options, start=1):
+            print(f"{i}. {description}")
 
-    try:
-        menu_len = len(menu_options)
-        choice = int(input(f"Enter your choice (1-{menu_len}): "))
-        if 1 <= choice <= menu_len:
-            action = menu_options[choice - 1][1]
-            action(dataframe)
-        action = menu_options[choice - 1][1]
+        choice = input(f"Enter your choice (1-{len(menu_options)}): ").strip()
+
+        if not choice.isdigit():
+            print("Invalid input. Please enter a number.")
+            continue
+
+        choice = int(choice)
+
+        if choice < 1 or choice > len(menu_options):
+            print("Invalid choice. Please try again.")
+            continue
+
+        description, action = menu_options[choice - 1]
+
         if action is None:
             print("Exiting dashboard. Goodbye!")
-            return False
-            action(dataframe)
-        else:
-            print("Invalid choice. Please enter a number corresponding to the options.")
+            break
 
-    except ValueError:
-        print("Invalid input. Please enter a number corresponding to the options.")
+        action(dataframe)
 
 
 # Call load_csv to load the data amd print the first 10 rows
@@ -352,9 +389,12 @@ sales_data = load_csv(filename)
 
 # Run the main processing loop
 def main():
-    while True:
-        if display_menu(sales_data) is False:
-            break
+    if sales_data is None:
+        print("Sales data could not be loaded.")
+        return
+
+    display_data_summary(sales_data)
+    display_menu(sales_data)
 
 # Check if this is the main moduel being run
 if __name__ == "__main__":
