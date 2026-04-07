@@ -49,6 +49,24 @@ def check_columns(df, needed_columns):
         return False
     return True
 
+# Export to Excel file
+def export_to_excel(result_df):
+    choice = input("\nDo you want to export these results to Excel? (y/n): ").strip().lower()
+
+    if choice != 'y':
+        return
+
+    filename = input("Enter the Excel filename (without extension): ").strip()
+
+    if filename == "":
+        print("Invalid filename. Export cancelled.")
+        return
+
+    try:
+        result_df.to_excel(f"{filename}.xlsx")
+        print(f"Results exported successfully to {filename}.xlsx")
+    except Exception as e:
+        print(f"Error exporting to Excel: {e}")
 
 # Menu Options
 def show_first_n_rows(df):
@@ -316,9 +334,11 @@ def display_menu(dataframe):
         if 1 <= choice <= menu_len:
             action = menu_options[choice - 1][1]
             action(dataframe)
+        action = menu_options[choice - 1][1]
         if action is None:
             print("Exiting dashboard. Goodbye!")
             return False
+            action(dataframe)
         else:
             print("Invalid choice. Please enter a number corresponding to the options.")
 
@@ -333,8 +353,8 @@ sales_data = load_csv(filename)
 # Run the main processing loop
 def main():
     while True:
-        print("Sales Data Dashboard")
-        display_menu(sales_data)
+        if display_menu(sales_data) is False:
+            break
 
 # Check if this is the main moduel being run
 if __name__ == "__main__":
