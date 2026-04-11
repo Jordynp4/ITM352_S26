@@ -23,8 +23,8 @@ def login():
 def success(username):
     return render_template('success.html', username=username)
 
-USERS = {"port": "port123",
-        "kazman": "kazman123"}
+USERS = {"Jojo": "Jojo543",
+        "Pendy": "Pendy543",}
 
 
 if __name__ == '__main__':
