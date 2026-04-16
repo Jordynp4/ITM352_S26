@@ -17,9 +17,8 @@ def quiz():
 @app.route('/result')
 def result():
     # Calculate and display the user's score
-    score = 1  # Example score for demonstration
+    score = 4  # Example score for demonstration
     return render_template('result.html', score=score)
-
 
 
 if __name__ == '__main__':
