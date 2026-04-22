@@ -2,27 +2,27 @@
     {
         "question": "What kind of magical creature is Shrek?",
         "options": ["Ogre", "Troll", "Giant", "Centaur"],
-        "answer": "Ogre"
+        "correct": "Ogre"
 
     },
     {
         "question": "What is the nameof the princess Shrek rescues?",
         "options": ["Fiona", "Rapunzel", "Cinderella", "Snow White"],
-        "answer": "Fiona"
+        "correct": "Fiona"
     },
     {
         "question": "What does Shrek turn into after drinking the Happily Ever After potion?",
         "options": ["Human", "Fairy", "Horse", "Elf"],
-        "answer": "Human"
+        "correct": "Human"
     },
     {
         "question": "Who is the main antagonist in the second Shrek movie?",
         "options": ["Fairy Godmother", "Lord Farquaad", "Prince Charming", "King Harold"],
-        "answer": "Fairy Godmother"
+        "correct": "Fairy Godmother"
     },
     {
         "question": "What is the name of the giant ginerbread man in Shrek 2?",
         "options": ["Mongo","Gingy", "Cookie", "gumdrop"],
-        "answer": "Mongo"
+        "correct": "Mongo"
     }
 ]

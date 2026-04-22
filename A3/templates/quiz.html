@@ -12,22 +12,23 @@
     {% endif %}
 
     <form method="POST" action="/submit">
-        {% for questions in questions %}
+        {% for question in questions %}
             <div>
                 <p>
                      <strong>Question {{ loop.index }} of {{ questions|length }}:</strong>
-                    {{ questions.questions }}
+                    {{ question.question }}
                 </p>
-                {% for option in questions.options %}
+                {% set question_index = loop.index0 %}
+                {% for option in question.options %}
                      <div>
                         <input
                             type="radio"
-                            id="q{{ loop.index0 }}_{{ loop.index }}"
-                            name="q{{ loop.index0 }}"
+                            id="q{{ question_index }}_{{ loop.index }}"
+                            name="q{{ question_index }}"
                             value="{{ option }}"
                             required
                         >
-                        <label for="q{{ loop.index0 }}_{{ loop.index }}">
+                        <label for="q{{ question_index }}_{{ loop.index }}">
                             {{ option }}
                         </label>
                     </div>
