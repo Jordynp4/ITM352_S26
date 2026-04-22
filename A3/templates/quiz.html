@@ -16,9 +16,9 @@
             <div>
                 <p>
                      <strong>Question {{ loop.index }} of {{ questions|length }}:</strong>
-                    {{ question.question }}
+                    {{ questions.questions }}
                 </p>
-                {% for option in question.options %}
+                {% for option in questions.options %}
                      <div>
                         <input
                             type="radio"
