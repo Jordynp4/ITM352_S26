@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shrek Quiz Game!</title>
+</head>
+<body>
+    <h1>Shrek Quiz Game!</h1>
+     {% if username %}
+        <p>Good luck, {{ username }}!</p>
+    {% endif %}
+
+    <form method="POST" action="/submit">
+        {% for questions in questions %}
+            <div>
+                <p>
+                     <strong>Question {{ loop.index }} of {{ questions|length }}:</strong>
+                    {{ question.question }}
+                </p>
+                {% for option in question.options %}
+                     <div>
+                        <input
+                            type="radio"
+                            id="q{{ loop.index0 }}_{{ loop.index }}"
+                            name="q{{ loop.index0 }}"
+                            value="{{ option }}"
+                            required
+                        >
+                        <label for="q{{ loop.index0 }}_{{ loop.index }}">
+                            {{ option }}
+                        </label>
+                    </div>
+                {% endfor %}
+
+            </div>
+            <hr>
+        {% endfor %}
+           <button type="submit">Submit Answers</button>
+
+    </form>
+
+</body>
+</html>
+                
