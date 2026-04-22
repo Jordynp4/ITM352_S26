@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results</title>
+</head>
+<body>
+    <h1>Shrek Quiz Results</h1>
+
+    {% if username %}
+        <p>Nice job, {{ username }}!</p>
+    {% endif %}
+    <h2>Your Score</h2>
+    <p>You got <strong>{{ score }}</strong> out of <strong>{{ total }}</strong> correct.</p>
+    <p>Final percentage: <strong>{{ percentage }}%</strong></p>
+
+     {% if percentage == 100 %}
+        <p>Perfect score! You really know your Shrek!</p>
+    {% elif percentage >= 80 %}
+        <p>Great job! You know the movies well!</p>
+    {% elif percentage >= 60 %}
+        <p>Not bad! Brush up on your Shrek knowledge!</p>
+    {% elif percentage >= 40 %}
+        <p>Keep watching Shrek and try again!</p>
+    {% else %}
+        <p>Better luck next time!</p>
+    {% endif %}
+    <hr>
+
+      <h2>Top 10 Leaderboard</h2>
+
+    {% if leaderboard %}
+        <table border="1">
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Score</th>
+                <th>Percentage</th>
+            </tr>
+              {% for entry in leaderboard %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ entry.name }}</td>
+                    <td>{{ entry.score }} / {{ entry.total }}</td>
+                    <td>{{ (entry.score / entry.total * 100) | round(1) }}%</td>
+                </tr>
+            {% endfor %}
+
+        </table>
+
+    {% else %}
+        <p>No scores yet. Be the first on the leaderboard!</p>
+    {% endif %}
+
+    <hr>
+
+    <a href="/quiz">Play Again</a>
+    <a href="/">Home</a>
+
+</body>
+</html>

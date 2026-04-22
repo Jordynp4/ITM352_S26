@@ -92,8 +92,10 @@ def submit():
 
     save_scores(request.cookies.get('username', 'Anonymous'), score, total)
     response = make_response(
-        render_template('result.html', score=score, total=total,
-                        percentage=round(score / total * 100, 1))
+        render_template('results.html', score=score, total=total,
+                        percentage=round(score / total * 100, 1),
+                        leaderboard=load_leaderboard(),
+                        username=request.cookies.get('username'))
     )
     response.set_cookie('score_history', json.dumps(history))
     return response
@@ -104,7 +106,7 @@ def results():
     score = request.args.get('score', 0, type=int)
     total = request.args.get('total', 5, type=int)
     leaderboard = load_leaderboard()[:10]
-    return render_template('result.html', score=score, total=total, leaderboard=leaderboard, username=request.cookies.get('username'))
+    return render_template('results.html', score=score, total=total, leaderboard=leaderboard, username=request.cookies.get('username'))
 
 @app.route('/api/questions')
 # API endpoint to get questions as JSON
