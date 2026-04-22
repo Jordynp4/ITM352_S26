@@ -2,7 +2,7 @@
 # Date: 4-16-2026
 # Quiz game website app
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, make_response
 import random
 import json
 
@@ -19,8 +19,6 @@ def load_questions():
 
 # Load leaderborad scores from JSON file
 def load_leaderboard():
-    with open('scores.json', 'r') as f:
-        return json.load(f)
     try:
         with open('scores.json', 'r') as f:
             return json.load(f)
@@ -31,6 +29,7 @@ def load_leaderboard():
 def save_scores(name, score, total):
     scores = load_leaderboard()
     scores.append({'name': name, 'score': score, 'total': total})
+    scores.sort(key=lambda x: x['score'], reverse=True)
     with open('scores.json', 'w') as f:
         json.dump(scores, f)
 
@@ -64,8 +63,11 @@ def start():
 # Load and display quiz page
 def quiz():
     questions = load_questions()
-    response = render_template('quiz.html', questions=questions, username = request.cookies.get('username'))
-    response.set_cookie('questions', json.dumps(questions))
+    response = make_response(                                  # make_response() wraps the string
+        render_template('quiz.html', questions=questions,
+                        username=request.cookies.get('username'))
+    )
+    response.set_cookie('questions', json.dumps(questions))   # now this works
     return response
 
 @app.route('/submit', methods=['POST'])
@@ -89,7 +91,10 @@ def submit():
     history.append({'score': score, 'total': total, 'percentage': round(score / total * 100, 1)})
 
     save_scores(request.cookies.get('username', 'Anonymous'), score, total)
-    response = render_template('result.html', score=score, total=total, percentage=round(score / total * 100, 1))
+    response = make_response(
+        render_template('result.html', score=score, total=total,
+                        percentage=round(score / total * 100, 1))
+    )
     response.set_cookie('score_history', json.dumps(history))
     return response
 

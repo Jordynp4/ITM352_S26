@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Welcome to the Quiz Game!</title>
+</head>
+<body>
+    <h1>Shrek Quiz Game!</h1>
+    <p>How well do you know the Shrek movies?</p>
+
+    {% if username %}
+        <p>Welcome back, {{ username }}!</p>
+    
+        {% if score_history %}
+            <h2>Your Previous Scores:</h2>
+
+            {% for result in score_history %}
+                    <p>
+                        Quiz {{ loop.index }} —
+                        {{ result.score }} / {{ result.total }} —
+                        {{ result.percentage }}%
+                    </p>
+                {% endfor %}
+
+        {% endif %}
+
+    {% endif %}
+
+      {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+    
+    <form method="POST" action="/start">
+
+        <label for="username">
+            {% if username %}
+                Play as {{ username }}, or enter a new name:
+            {% else %}
+                Enter your name to begin:
+            {% endif %}
+        </label>
+
+      <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Your name here..."
+            value="{{ username or '' }}"
+            maxlength="30"
+            required
+        >
+
+        <button type="submit">Start the Quiz!</button>
+
+    </form>
+
+    <a href="{{ url_for('quiz') }}">Start Quiz</a>
+</body>
+</html>
